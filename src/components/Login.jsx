@@ -1,10 +1,17 @@
 import React, { useState, useRef } from 'react';
 import Header from './Header';
 import { checkValidData } from '../utils/Validation';
+import { createUserWithEmailAndPassword, signInWithEmailAndPassword, updateProfile } from "firebase/auth";
+import { auth } from "../utils/Firebase";
+import { useNavigate } from "react-router-dom";
+import { useDispatch } from 'react-redux';
+import { addUser } from '../utils/UserSlice';
 
 const Login = () => {
     const [isSignInForm, setIsSignInForm] = useState(true);
     const [errorMessage, setErrorMessage] = useState(null);
+    const navigate = useNavigate()
+    const dispatch = useDispatch();
 
     const name = useRef(null);
     const email = useRef(null);
@@ -21,10 +28,45 @@ const Login = () => {
 
         const message = checkValidData(nameVal, emailVal, passwordVal, isSignInForm);
         setErrorMessage(message);
-
         if (message) return;
-    };
 
+        if (!isSignInForm) {
+            createUserWithEmailAndPassword(auth, emailVal, passwordVal)
+                .then((userCredential) => {
+                    const user = userCredential.user;
+                    updateProfile(auth.currentUser, {
+                        displayName: nameVal, photoURL: ""
+                    }).then(() => {
+                        const { uid, email, displayName } = auth.currentUser;
+                        dispatch(addUser({
+                            uid: uid,
+                            email: email,
+                            displayName: displayName,
+                        }))
+                        navigate("/browse")
+                    }).catch((error) => {
+                        setErrorMessage(error.message);
+                    })
+                })
+                .catch((error) => {
+                    const errorCode = error.code;
+                    const errorMessage = error.message;
+                    setErrorMessage(errorCode);
+                });
+        } else {
+            signInWithEmailAndPassword(auth, emailVal, passwordVal)
+                .then((userCredential) => {
+                    const user = userCredential.user;
+                    console.log(user);
+                    navigate('/browse');
+                })
+                .catch((error) => {
+                    const errorCode = error.code;
+                    const errorMessage = error.message;
+                    setErrorMessage(errorCode);
+                });
+        }
+    };
 
     return (
         <div className="relative min-h-screen">
@@ -81,4 +123,4 @@ const Login = () => {
     )
 }
 
-export default Login
+export default Login;

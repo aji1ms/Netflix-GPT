@@ -1,38 +1,62 @@
-import React, { useState } from 'react';
+import React, { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { signOut } from "firebase/auth";
+import { onAuthStateChanged, signOut } from "firebase/auth";
 import { auth } from '../utils/Firebase';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
+import { HiOutlineLogout } from "react-icons/hi";
+import { addUser, removeUser } from '../utils/UserSlice';
+import { ICON, LOGO } from '../utils/Constant';
 
 const Header = () => {
+    const dispatch = useDispatch();
     const navigate = useNavigate();
     const user = useSelector(store => store.user);
 
-    const handleSignout = () => {
-        signOut(auth).then(() => {
-            navigate("/")
-        }).catch((error) => {
-            navigate("error")
+    useEffect(() => {
+        const unsubscribe = onAuthStateChanged(auth, (user) => {
+            if (user) {
+                const { uid, email, displayName } = user;
+                dispatch(addUser({
+                    uid: uid,
+                    email: email,
+                    displayName: displayName,
+                }))
+                navigate("/browse");
+            } else {
+                dispatch(removeUser());
+                navigate("/");
+            }
         });
+        return () => unsubscribe();
+    }, []);
+
+    const handleSignout = () => {
+        signOut(auth).then(() => { })
+            .catch((error) => {
+                navigate("error")
+            });
     }
+
     return (
         <div className="absolute w-screen px-8 py-2 bg-gradient-to-b from-black z-10 flex justify-between">
             <img
                 className='w-36'
-                src="https://www.freepnglogos.com/uploads/netflix-logo-text-emblem-31.png"
+                src={LOGO}
                 alt="logo"
             />
             {user && <div className='flex py-4'>
                 <img
                     className='hidden sm:block w-12 h-12 md:w-12 md:h-12 cursor-pointer'
-                    src="https://wallpapers.com/images/high/netflix-profile-pictures-1000-x-1000-88wkdmjrorckekha.webp"
+                    src={ICON}
                     alt="icon"
                 />
                 <button
                     onClick={handleSignout}
-                    className='bg-red-600 ml-2 text-white px-4 font-bold hover:bg-red-700'>Sign Out</button>
+                    className='text-4xl ml-2 text-white pl-2 cursor-pointer'>
+                    <HiOutlineLogout />
+                </button>
             </div>}
-        </div>
+        </div >
     )
 }
 

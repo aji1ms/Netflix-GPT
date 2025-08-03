@@ -52,7 +52,7 @@ const Header = () => {
                 />
                 <button
                     onClick={handleSignout}
-                    className='text-4xl ml-2 text-white pl-2 cursor-pointer'>
+                    className='text-4xl ml-2 text-white pl-2 cursor-pointer bg-red-500 rounded-full'>
                     <HiOutlineLogout />
                 </button>
             </div>}

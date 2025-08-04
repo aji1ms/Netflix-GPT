@@ -44,9 +44,9 @@ const Header = () => {
     }
 
     return (
-        <div className="absolute w-screen px-8 py-2 bg-gradient-to-b from-black z-10 flex justify-between">
+        <div className="absolute w-screen px-14 md:px-8 py-2 bg-gradient-to-b from-black z-10 flex flex-col md:flex-row justify-between">
             <img
-                className='w-36'
+                className='w-36 mx-auto md:mx-0'
                 src={LOGO}
                 alt="logo"
             />
@@ -58,7 +58,7 @@ const Header = () => {
                     />
                 </button>
                 <img
-                    className='hidden sm:block w-12 h-12 md:w-12 md:h-12 cursor-pointer'
+                    className='sm:block w-12 h-12 md:w-12 md:h-12 cursor-pointer'
                     src={ICON}
                     alt="icon"
                 />

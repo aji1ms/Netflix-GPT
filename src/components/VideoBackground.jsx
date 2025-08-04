@@ -9,7 +9,7 @@ const VideoBackground = ({ movieId }) => {
     return (
         <div className='w-screen'>
             <iframe
-                className='w-screen h-[60vh] sm:h-full aspect-video'
+                className='w-scren aspect-video'
                 src={
                     "https://www.youtube.com/embed/" +
                     trailerVideo?.key +

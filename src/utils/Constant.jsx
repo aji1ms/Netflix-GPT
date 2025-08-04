@@ -4,7 +4,10 @@ export const OPTIONS = {
     method: 'GET',
     headers: {
         accept: 'application/json',
-        Authorization: 'Bearer eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiJmNjVkYzQzYjFkZmE3NDkzZTZmNThjMmY0N2U5YjJmNSIsIm5iZiI6MTc1NDAyOTg2OS42NTYsInN1YiI6IjY4OGM1ZjJkNjRhNzA0NDA2ODYxZTUwZSIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.LNrwMMa_zUl8iGN1Ipjtq_lZ4AXuBFW4Er7xS6dtbo4'
+        Authorization: 'Bearer ' + import.meta.env.VITE_TMDB_KEY,
     }
 };
 export const POSTER_URL_PATH = "https://image.tmdb.org/t/p/w500";
+export const BACKGROUND_URL = "https://assets.nflxext.com/ffe/siteui/vlv3/258d0f77-2241-4282-b613-8354a7675d1a/web/IN-en-20250721-TRIFECTA-perspective_cadc8408-df6e-4313-a05d-daa9dcac139f_large.jpg";
+
+export const GPT_KEY = import.meta.env.VITE_API_KEY; 

@@ -5,6 +5,7 @@ import { createUserWithEmailAndPassword, signInWithEmailAndPassword, updateProfi
 import { auth } from "../utils/Firebase";
 import { useDispatch } from 'react-redux';
 import { addUser } from '../utils/UserSlice';
+import { BACKGROUND_URL } from '../utils/Constant';
 
 const Login = () => {
     const [isSignInForm, setIsSignInForm] = useState(true);
@@ -75,7 +76,7 @@ const Login = () => {
             <div className='fixed inset-0 hidden md:block'>
                 <img
                     className='h-screen w-screen object-cover'
-                    src="https://assets.nflxext.com/ffe/siteui/vlv3/258d0f77-2241-4282-b613-8354a7675d1a/web/IN-en-20250721-TRIFECTA-perspective_cadc8408-df6e-4313-a05d-daa9dcac139f_large.jpg"
+                    src={BACKGROUND_URL}
                     alt="background"
                 />
             </div>

@@ -6,6 +6,8 @@ import { useDispatch, useSelector } from 'react-redux';
 import { HiOutlineLogout } from "react-icons/hi";
 import { addUser, removeUser } from '../utils/UserSlice';
 import { ICON, LOGO } from '../utils/Constant';
+import { CiSearch } from "react-icons/ci";
+import { toggleSearchView } from '../utils/GPTslice';
 
 const Header = () => {
     const dispatch = useDispatch();
@@ -30,6 +32,10 @@ const Header = () => {
         return () => unsubscribe();
     }, []);
 
+    const handleGPTsearch = () => {
+        dispatch(toggleSearchView())
+    }
+
     const handleSignout = () => {
         signOut(auth).then(() => { })
             .catch((error) => {
@@ -45,6 +51,12 @@ const Header = () => {
                 alt="logo"
             />
             {user && <div className='flex py-4'>
+                <button
+                    onClick={handleGPTsearch}
+                    className='bg-purple-700 text-white py-2 px-4 mr-2 rounded-sm hover:bg-purple-800 items-center'>
+                    GPT Search<CiSearch className='inline-block font-extrabold text-2xl ml-1'
+                    />
+                </button>
                 <img
                     className='hidden sm:block w-12 h-12 md:w-12 md:h-12 cursor-pointer'
                     src={ICON}

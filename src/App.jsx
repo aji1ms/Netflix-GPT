@@ -3,6 +3,7 @@ import { BrowserRouter, Routes, Route, } from "react-router-dom";
 import Body from "./components/Body";
 import Browse from "./components/Browse";
 import Login from "./components/Login";
+import MovieVideos from "./components/MovieVideos";
 
 function App() {
   return (
@@ -11,6 +12,7 @@ function App() {
         <Route path="/" element={<Body />}>
           <Route index element={<Login />} />
           <Route path="browse" element={<Browse />} />
+          <Route path="video/:id" element={<MovieVideos />} />
         </Route>
       </Routes>
     </BrowserRouter>

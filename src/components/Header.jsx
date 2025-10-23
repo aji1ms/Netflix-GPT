@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { onAuthStateChanged, signOut } from "firebase/auth";
 import { auth } from '../utils/Firebase';
@@ -13,6 +13,7 @@ const Header = () => {
     const dispatch = useDispatch();
     const navigate = useNavigate();
     const user = useSelector(store => store.user);
+    const [gptbtn, setGptbtn] = useState(true)
 
     useEffect(() => {
         const unsubscribe = onAuthStateChanged(auth, (user) => {
@@ -33,6 +34,7 @@ const Header = () => {
     }, []);
 
     const handleGPTsearch = () => {
+        setGptbtn(!gptbtn)
         dispatch(toggleSearchView())
     }
 
@@ -44,31 +46,37 @@ const Header = () => {
     }
 
     return (
-        <div className="absolute w-screen px-14 md:px-8 py-2 bg-gradient-to-b from-black z-10 flex flex-col md:flex-row justify-between">
+        <div className="absolute w-full px-6 md:px-12 py-3 bg-gradient-to-b from-black via-black/80 to-transparent z-10 flex flex-col md:flex-row justify-between items-center">
             <img
-                className='w-36 mx-auto md:mx-0'
+                className='w-40 mx-auto md:mx-0 cursor-pointer transition-transform duration-300 hover:scale-105'
                 src={LOGO}
                 alt="logo"
             />
-            {user && <div className='flex py-4'>
-                <button
-                    onClick={handleGPTsearch}
-                    className='bg-purple-700 text-white py-2 px-4 mr-2 rounded-sm hover:bg-purple-800 items-center'>
-                    GPT Search<CiSearch className='inline-block font-extrabold text-2xl ml-1'
-                    />
-                </button>
-                <img
-                    className='sm:block w-12 h-12 md:w-12 md:h-12 cursor-pointer'
-                    src={ICON}
-                    alt="icon"
-                />
-                <button
-                    onClick={handleSignout}
-                    className='text-4xl ml-2 text-white pl-2 cursor-pointer bg-red-500 rounded-full'>
-                    <HiOutlineLogout />
-                </button>
-            </div>}
-        </div >
+            {user && (
+                <div className='flex items-center gap-3 py-4'>
+                    <button
+                        onClick={handleGPTsearch}
+                        className='bg-gradient-to-r from-purple-600 to-purple-700 text-white py-2.5 px-5 rounded-lg font-medium shadow-lg hover:from-purple-700 hover:to-purple-800 transition-all duration-300 hover:shadow-purple-500/50 hover:scale-105 flex items-center gap-2'>
+                        <span>{gptbtn ? "GPT Search" : "Home"}</span>
+                        <CiSearch className='text-2xl font-bold' />
+                    </button>
+
+                    <div className='w-12 h-12 rounded-full overflow-hidden border-2 border-blue-500 shadow-lg hover:blue-purple-400 transition-all duration-300 hover:scale-110 cursor-pointer'>
+                        <img
+                            className='w-full h-full object-cover'
+                            src={ICON}
+                            alt="icon"
+                        />
+                    </div>
+
+                    <button
+                        onClick={handleSignout}
+                        className='w-12 h-12 flex items-center justify-center text-2xl text-white bg-gradient-to-r from-red-500 to-red-600 rounded-full shadow-lg hover:from-red-600 hover:to-red-700 transition-all duration-300 hover:shadow-red-500/50 hover:scale-110'>
+                        <HiOutlineLogout />
+                    </button>
+                </div>
+            )}
+        </div>
     )
 }
 

@@ -29,17 +29,17 @@ const MovieVideos = () => {
     }, [id])
 
     return (
-        <div className="w-screen">
+        <div className="w-screen h-screen">
             {video ? (
                 <iframe
-                    className="w-screen aspect-video"
+                    className="w-screen aspect-video h-full"
                     src={`https://www.youtube.com/embed/${video}?autoplay=1&mute=1`}
                     title="YouTube video player"
                     allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
                 ></iframe>
             ) : (
-                <div>
-                    <div className='w-screen aspect-video bg-gray-300 animate-pulse' />
+                <div className='w-screen h-screen aspect-video bg-black flex items-center justify-center'>
+                    <div className='w-16 h-16 border-4 border-gray-600 border-t-white rounded-full animate-spin' />
                 </div>
             )}
             <div className="block md:hidden">

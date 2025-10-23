@@ -11,12 +11,13 @@ const MovieCards = ({ posterPath, movieId }) => {
     }
 
     return (
-        <div className='w-32 pr-3 md:w-48 md:pr-4'>
+        <div className='w-32 pr-3 md:w-48 md:pr-4 cursor-pointer'>
             <img
                 key={movieId}
                 src={POSTER_URL_PATH + posterPath}
                 alt="movies poster"
                 onClick={() => handleClick(movieId)}
+                className="transition-transform duration-300 ease-in-out hover:scale-110"
             />
         </div>
     )

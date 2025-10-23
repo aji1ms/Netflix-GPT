@@ -3,6 +3,7 @@ import { useDispatch } from 'react-redux';
 import { addGptMovieResults } from "../utils/GPTslice";
 import gptSearchHelper from '../hooks/gptSearchHelper';
 import GPTShimmer from './GptShimmer';
+import { CiSearch } from 'react-icons/ci';
 
 const GPTsearchBar = () => {
     const dispatch = useDispatch();
@@ -25,25 +26,33 @@ const GPTsearchBar = () => {
 
     return (
         <>
-            <div className='flex justify-center pt-[50%] md:pt-[5%]'>
+            <div className='flex justify-center pt-[50%] md:pt-[8%] px-4'>
                 <form
                     onSubmit={(e) => e.preventDefault()}
-                    className='w-full md:w-6/12 bg-black grid grid-cols-12'>
-                    <input
-                        ref={searchText}
-                        className='p-4 m-3 col-span-8 md:col-span-9'
-                        type="text"
-                        placeholder='What Would You Like To Watch Today?'
-                    />
-                    <button
-                        onClick={handleGPTsearch}
-                        className='py-2 px-4 m-3 bg-red-600 hover:bg-red-700 text-white col-span-4 md:col-span-3'
-                    >Search</button>
-                    {isError && (<p className='text-red-600 font-bold px-4 pb-2'>{isError}</p>)}
+                    className='w-full md:w-7/12 lg:w-6/12'>
+                    <div className='bg-black/70 rounded-lg p-4 shadow-lg'>
+                        <div className='flex flex-col md:flex-row gap-3'>
+                            <input
+                                ref={searchText}
+                                className='flex-1 p-4 bg-gray-800 border border-gray-700 rounded-lg text-white placeholder-gray-400 focus:outline-none focus:border-purple-600 transition-colors duration-300'
+                                type="text"
+                                placeholder='What would you like to watch today?'
+                            />
+                            <button
+                                onClick={handleGPTsearch}
+                                className='px-8 py-4 bg-red-600 hover:bg-red-700 text-white font-medium rounded-lg transition-colors duration-300'
+                            >
+                                Search
+                            </button>
+                        </div>
+                        {isError && (
+                            <p className='text-red-500 font-medium mt-3 px-2'>{isError}</p>
+                        )}
+                    </div>
                 </form>
             </div>
             {loading && <GPTShimmer />}
-        </> 
+        </>
     )
 }
 

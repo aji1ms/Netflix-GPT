@@ -15,13 +15,7 @@ A smart movie browsing app powered by GPT and the TMDB API — built with React 
 
 ## 🚀 Live Demo
 
-[Click here to view the live site](https://your-firebase-link.web.app)
-
-> Make sure to replace the above URL with your actual deployed link!
-
-## 📸 Preview
-
-![Netflix GPT UI Preview](https://netflixgpt-2c7b0.web.app/)
+[Click here to view the live site](https://netflix-gpt-ivory-zeta.vercel.app/)
 
 ## 🛠️ Tech Stack
 
